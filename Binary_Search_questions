@@ -1,0 +1,287 @@
+public class Main
+{
+	static int searchNum(int[] arr, int target) {
+		int L=0;
+		int R=arr.length-1;
+		while(L<=R) {
+			int mid =(L+R)/2;
+
+			if(arr[mid]==target)  return mid;
+			if(arr[mid]>target) {
+				R=mid-1;
+			}
+			else {
+				L=mid+1;
+			}
+		}
+		return -1;
+	}
+	static int[] searchMatrics(int[][] mat,int k) {
+		int Rows=mat.length;
+		int Cols=mat[0].length;
+		int  R = Rows*Cols-1;
+		int  L = 0;
+		while(L<=R) {
+			int mid =(L+R)/2;
+			int rowmid=mid/Cols;
+			int colmid=mid%Cols;
+			if(mat[rowmid][colmid]==k) return new int[] {rowmid, colmid};
+			if(mat[rowmid][colmid]>k) {
+				R=mid-1;
+			}
+			else {
+				L=mid+1;
+			}
+		}
+		return new int[] {-1};
+	}
+
+	static int firstOccurance(int[] arr, int target) {
+		int L=0;
+		int R=arr.length-1;
+		int ans=0;
+		while(L<=R) {
+			int mid=(L+R)/2;
+			if(arr[mid]==target) {
+				ans=mid;
+				R=mid-1;
+			}
+			else if(arr[mid]>target) {
+				R=mid-1;
+			}
+			else {
+				L=mid+1;
+			}
+		}
+		return ans;
+	}
+
+
+	static int lastOccurance(int[] arr, int target) {
+		int L=0;
+		int R=arr.length-1;
+		int ans=0;
+		while(L<=R) {
+			int mid=(L+R)/2;
+			if(arr[mid]==target) {
+				ans=mid;
+				L=mid+1;
+			}
+			else if(arr[mid]>target) {
+				R=mid-1;
+			}
+			else {
+				L=mid+1;
+			}
+		}
+		return ans;
+	}
+
+	static int peekValue(int[] arr) {
+		int L=0;
+		int R=arr.length-1;
+		while(L<=R) {
+			int mid =(L+R)/2;
+			if(arr[mid]>arr[mid+1]&&arr[mid]>arr[mid-1])	return arr[mid];
+			if(arr[mid]<arr[mid+1]) {
+				R=mid-1;
+			}
+			else {
+				L=mid+1;
+			}
+		}
+		return -1;
+	}
+
+	static int upperBound(int[] arr, int k) {
+		int L=0;
+		int R=arr.length-1;
+		int ans =0;
+		while(L<=R) {
+
+			int mid =(L+R)/2;
+			if(arr[mid]>k) {
+				ans=mid;
+				R=mid-1;
+			}
+			else {
+				L=mid+1;
+			}
+		}
+		return ans;
+	}
+	static int lowerBound(int[] arr,int k ) {
+		int L=0;
+		int R=arr.length-1;
+		int ans=-1;
+		while(L<=R) {
+			int mid = (L+R)/2;
+			if(arr[mid]>=k) {
+				ans=mid;
+				R=mid-1;
+			}
+			else {
+				L=mid+1;
+			}
+		}
+		return ans;
+	}
+	static int max(int[] arr) {
+		int L=0;
+		int R=arr.length-1;
+		while(L<=R) {
+			int mid=(L+R)/2;
+			if(arr[mid]<0) {
+				L=mid+1;
+			}
+			else {
+				R=mid-1;
+			}
+		}
+		int negativecount=L;
+
+		L=0;
+		R=arr.length-1;
+		while(L<=R) {
+			int mid=(L+R)/2;
+			if(arr[mid]>0) {
+				R=mid-1;
+			}
+			else {
+				L=mid+1;
+			}
+		}
+		int pcount=arr.length-L;
+		return Math.max(negativecount,pcount);
+	}
+	static int singleNum(int [] arr) {
+		if(arr.length==1||arr.length==0) return -1;
+		if(arr[0]!=arr[1]) return arr[0];
+		if(arr[arr.length-1]!=arr[arr.length-2]) return arr[arr.length-1];
+		int R=arr.length-1;
+		int L=0;
+		while(L<=R) {
+			int mid =(L+R)/2;
+			if(arr[mid]!=arr[mid+1] && arr[mid]!=arr[mid-1]) return arr[mid];
+			int fmid=mid;
+			int smid=mid;
+			if(arr[mid]==arr[mid+1]) {
+				smid=mid+1;
+			}
+			else {
+				fmid=mid-1;
+			}
+			int leftCount=fmid-L;
+			int rightCount=R-smid;
+			if(leftCount%2==0)
+				L=smid+1;
+			else
+				R=fmid-1;
+		}
+		return -1;
+	}
+	static int searchInRotatedArray(int[] arr, int k ) {
+		if(arr.length==0) return -1;
+		int L=0;
+		int R=arr.length-1;
+		while(L<=R) {
+			int mid=(L+R)/2;
+			if(arr[mid]==k) return mid;
+			if(arr[mid]>=arr[L]) {
+				if(arr[mid]>k&&k>=arr[L]) {
+					R=mid-1;
+				}
+				else {
+					L=mid+1;
+				}
+			}
+			else {
+				if(arr[mid]<k&&k<=arr[R]) {
+					L=mid+1;
+				}
+				else {
+					R=mid-1;
+				}
+			}
+		}
+		return -1;
+	}
+	static int min(int[] arr) {
+		int L=0;
+		int R=arr.length-1;
+		int ans=33333;
+		while(L<=R) {
+			int mid=(L+R)/2;
+			if(arr[mid]>arr[L]) {
+				ans = Math.min(ans,arr[L]);
+				L=mid+1;
+			}
+			else {
+				ans = Math.min(ans,arr[mid]);
+				R=mid-1;
+			}
+		}
+		return ans;
+	}
+
+	static int howManyTime(int[] arr) {
+		int L=0;
+		int R=arr.length-1;
+		int ans=Integer.MAX_VALUE;
+		int idx=-1;
+		while(L<=R) {
+			int mid=(L+R)/2;
+			if(arr[mid]>arr[L]) {
+				//   ans = Math.min(ans,arr[L]);
+				if(arr[L]<ans) {
+					ans=arr[L];
+					idx=L;
+				}
+				L=mid+1;
+			}
+			else {
+				//  ans = Math.min(ans,arr[mid]);
+				if(arr[mid]<ans) {
+					ans=arr[mid];
+					idx=mid;
+				}
+				R=mid-1;
+			}
+		}
+		return idx;
+	}
+	static int mPN(int[] arr, int k) {
+		int L=0;
+		int R=arr.length-1;
+		while(L<=R) {
+			int mid = (L+R)/2;
+			int cNum=mid+1;
+			int mNum=arr[mid]-cNum;
+			if(mNum<k) {
+				L=mid+1;
+			}
+			else {
+				R=mid-1;
+			}
+		}
+		return L+k;
+	}
+	public static void main(String[] args) {
+		int[] arr = {3, 5, 7, 10};
+// 		System.out.println(searchNum(arr,9));
+// 		System.out.println(firstOccurance(arr,7));
+// 		System.out.println(listOccurance(arr,7));
+// 		System.out.println(upperBound(arr,2));
+// 		System.out.println(lowerBound(arr,2));
+//		System.out.println(max(arr));
+//      int [][] mat = {{1,2,3,4},{5,6,7,8}};
+//      int[] idx=searchMatrics(mat,4);
+//      for(int a :idx){
+//      System.out.print(" "+a);
+//      System.out.println(searchInRotatedArray(arr,3 ));
+//      System.out.println(min(arr));
+//      System.out.println(howManyTime(arr));
+//      System.out.println(mPN(arr,6));
+	}
+
+}
