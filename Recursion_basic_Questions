@@ -1,0 +1,83 @@
+public class Main
+{
+	static void maxNumInArray(int[] arr, int idx) {
+		if(idx==arr.length) {
+			return;
+		}
+		System.out.print(" "+arr[idx]);
+		maxNumInArray(arr,idx+1);
+	}
+
+
+	static int pow(int a, int b) {
+		if(b==0) {
+			return 1;
+		}
+		return a*pow(a,b-1);
+	}
+
+	static int reverseNum(int num, int rev) {
+		if(num==0) {
+			return rev;
+		}
+		int digit=num%10;
+		rev=digit+10*rev;
+		return reverseNum(num/10,rev);
+	}
+	static int sum(int num , int sum) {
+		if(num==0) return sum;
+		int digit=num%10;
+		sum+=digit;
+		return sum(num/10,sum);
+	}
+	static boolean sortedArray(int[] arr, int idx) {
+		if(idx==arr.length-1) return true;
+		return arr[idx]<arr[idx+1]&&sortedArray(arr,idx+1);
+	}
+
+
+	static void reverse(int[] arr,int i, int j) {
+		if(i==j) {
+			return;
+		}
+		int temp =arr[i];
+		arr[i]=arr[j];
+		arr[j]=temp;
+		reverse(arr,(i+1),(j-1));
+	}
+	static int armtrong(int num, int sum) {
+		if(num==0)return sum;
+		int digit= num%10;
+		sum+=digit*digit*digit;
+		return armtrong(num/10,sum);
+	}
+
+	static int max(int[] arr, int idx, int ans) {
+		if(idx==arr.length-1) {
+			if(arr[idx]>ans) ans=arr[idx];
+			return ans;
+		}
+		if(arr[idx]>ans) ans =arr[idx];
+		return max(arr,idx+1,ans);
+	}
+	static void gp(int n,String s,int l,int r) {
+		if(r==n) {
+			System.out.print(s+" ");
+			return;
+
+		}
+
+		if(l<n)  gp(n,s+"(",  l+1 ,r);
+		if(r<l)  gp(n,s+")", l,  r+1);
+	}
+
+   static void TowerOfHonai(int n , char src , char  helper,char dest){
+       if(n==0) return;
+       TowerOfHonai(n-1,src,dest,helper);
+       System.out.println(src+"->"+dest);
+       TowerOfHonai(n-1,helper,src,dest);
+   }
+	public static void main(String[] args) {
+		TowerOfHonai(4,'A','B','C');
+	}
+}
