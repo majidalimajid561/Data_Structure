@@ -1,0 +1,113 @@
+class Node {
+	int val;
+	Node next;
+	Node (int val) {
+		this.val=val;
+	}
+}
+
+class LL{
+	Node  head;
+	Node  tail;
+	int size=0;
+	void addAtHead(int val) {
+		Node temp = new Node(val);
+		if(head==null) {
+			head=tail=temp;
+		}
+		else {
+			temp.next=head;
+			head=temp;
+		}
+		size++;
+	}
+
+	void add(int val) {
+		Node temp = new Node(val);
+		if(head==null) {
+			head=tail=temp;
+		}
+		else {
+			tail.next=temp;
+			tail=temp;
+		}
+		size++;
+	}
+
+	void addAt(int idx, int val) throws Exception{
+		if(idx<0 || idx>size) {
+		throw new  Exception("Not valid Index");
+		}
+		else if(idx==0) {
+			addAtHead(val);
+		}
+		else if(idx==size) {
+			add(val);
+		}
+		else {
+			Node t = head;
+			Node temp = new Node(val);
+			for(int i=1; i<idx; i++) {
+				t=t.next;
+			}
+			temp.next=t.next;
+			t.next=temp;
+			size++;
+		}
+	}
+	
+	void remove(int idx) throws Exception {
+		if(idx<0||idx>=size) {
+			throw new  Exception("Not valid Index");
+		}
+		if(idx==0) {
+			if(size==1) {
+				head=null;
+				tail=null;
+			}
+			else {
+				head=head.next;
+			}
+		}
+		else if(idx==size-1) {
+			Node t = head;
+			for(int i =1; i<idx; i++) {
+            t=t.next;
+			}
+			t.next=null;
+			tail=t;
+		}
+		else {
+		    Node t= head;
+		   	for(int i=1; i<idx; i++) {
+            t=t.next;
+			}
+			t.next=t.next.next;
+		}
+		size--;
+	}
+	void info() {
+		Node temp = head;
+		while(temp!=null) {
+			System.out.print(temp.val+" ");
+			temp = temp.next;
+		}
+		System.out.println();
+	}
+
+
+}
+public class Main
+{
+	public static void main(String[] args) throws Exception{
+		LL list = new LL();
+		list.addAtHead(12);
+		list.add(13);
+		list.add(14);
+		list.add(15);
+		list.add(16);
+		list.add(6);
+		list.remove(5);
+		list.info();
+	}
+}
