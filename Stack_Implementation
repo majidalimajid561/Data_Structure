@@ -1,0 +1,128 @@
+import java.util.*;
+class Stack {
+	int idx=0;
+	int[] arr =new  int[10];
+	void push(int val) {
+		if(idx==arr.length) {
+			System.out.print("Stack is full");
+			return;
+		}
+		arr[idx++]=val;
+	}
+	
+	
+	int peek() {
+	    if(idx==0){
+	        System.out.println("Empty stack");
+	        return -1;
+	    }
+		return arr[idx-1];
+	}
+	int pop() {
+	      if(idx==0){
+	        System.out.println("Empty stack");
+	        return -1;
+	    }
+		int old =arr[idx-1];
+		idx--;
+		return old;
+	}
+
+    int size(){
+        return idx;
+    }
+void info(){
+    for(int i=0; i<idx; i++){
+        System.out.print(arr[i]+" ");
+    }
+    System.out.println();
+}
+
+class Stack{
+    idx=0;
+    
+}
+
+}
+
+class Node {
+	Node next;
+	int val;
+	Node(int val) {
+		this.val=val;
+	}
+}
+
+class Stack {
+	int size=0;
+	Node head;
+	void push(int val) {
+		Node temp  =new Node(val);
+		temp.next=hea  d;
+		head=temp;
+		size++;
+	}
+	
+	int peek() {
+		if(head==null) {
+			System.out.println("Stack is Empty");
+			return -1;
+		}
+		return head.val;
+	}
+	int pop() {
+		if(head==null) {
+			System.out.println("Stack is Empty");
+			return -1;
+		}
+		int old = head.val;
+		head=head.next;
+		size--;
+		return old;
+	}
+	void infoRec(Node h){
+	 if(h==null){
+	     return;
+	 } 
+	 infoRec(h.next);
+	 System.out.print(h.val+" ");
+	}
+	void info(){
+	    infoRec(head);
+	    System.out.println();
+	}
+}
+public class Main
+{
+    static void show(Stack<Integer> st ){
+     if(st.size()==0){
+         return;
+     }
+     int top=st.pop();
+     show(st);
+     System.out.print(top+" ");
+     st.push(top);
+     
+    }
+    static void insert(Stack<Integer> st ,int val){
+        if(st.size()==0) {
+            st.push(val);
+            return;
+        }
+        int top=st.pop();
+        insert(st,val);
+        st.push(top);
+    }
+    static void reverse(Stack<Integer> st){
+        if(st.size()==0){
+            return;
+        }
+        int top =st.pop();
+        reverse(st);
+        insert(st,top);
+    }
+	public static void main(String[] args) {
+		Stack<Integer> st = new Stack<>();
+	
+	} 
+}
