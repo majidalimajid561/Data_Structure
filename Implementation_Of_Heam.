@@ -1,0 +1,264 @@
+import java.util.*;
+class HeapMin {
+	int [] arr;
+	HeapMin(int capacity) {
+		arr=new int[capacity+1];
+		//	Arrays.fill(arr,Integer.MAX_VALUE);
+	}
+	int idx=1;
+
+	void add(int val) {
+		if(idx==arr.length) {
+			System.out.println("Heap is full");
+			return;
+		}
+		arr[idx++]=val;
+		//rearrangemnet
+		int root=idx-1;
+		while(root!=1) {
+			int parent=root/2;
+			if(arr[parent]>arr[root]) {
+				int temp =arr[parent];
+				arr[parent]=arr[root];
+				arr[root]=temp;
+				root=parent;
+			}
+			else break;
+		}
+	}
+
+	void info() {
+		if(idx==1) {
+			System.out.print("Heap is Empty");
+			return;
+		}
+		for(int i=1; i<idx; i++) {
+			System.out.print(arr[i]+" ");
+		}
+		System.out.println();
+	}
+
+	int peek() {
+		if(size()==0) {
+			System.out.println("Heap is Empty");
+			return -1;
+		}
+		return arr[1];
+	}
+	int size() {
+		return idx-1;
+	}
+	int remove() {
+		if(size()==0) {
+			System.out.println("Heap is Empty");
+			return -1;
+		}
+		int min =arr[1];
+		arr[1]=arr[idx-1];
+		idx--;
+		int root=1;
+		//finding left and right Childs values and also preventind from Exception
+		int leftValue=(2*root<=size())? arr[2*root]:Integer.MAX_VALUE;
+		int rightValue=(2*root+1<=size())? arr[2*root+1]:Integer.MAX_VALUE;
+		while(root<=size()) {
+			if(arr[root]<leftValue&&arr[root]<rightValue) break;
+			else {
+				if(leftValue<rightValue) {
+					int temp=arr [root];
+					arr[root]=arr[2*root];
+					arr[2*root]=temp;
+					root=2*root;
+				}
+				else {
+					//right child's value is small
+					int temp=arr[root];
+					arr[root]=arr[2*root+1];
+					arr[2*root+1]=temp;
+					root=2*root+1;
+				}
+			}
+		}
+		return min;
+	}
+}
+
+class HeapMax {
+	int[] arr;
+	int idx=0;
+	void add(int val) {
+		if(idx==arr.length) {
+			System.out.println("Heap is full");
+			return;
+		}
+		arr[idx++]=val;
+		// heapfiy UP
+		int root=idx-1;
+		while(root!=0) {
+			int parent=(root-1)/2;
+			if(arr[parent]<arr[root]) {
+				int temp =arr[parent];
+				arr[parent]=arr[root];
+				arr[root]=temp;
+				root=parent;
+			}
+			else break;
+		}
+	}
+
+	void info() {
+		if(idx==0) {
+			System.out.print("Heap is Empty");
+			return;
+		}
+		for(int i=0; i<idx; i++) {
+			System.out.print(arr[i]+" ");
+		}
+		System.out.println();
+	}
+	int  size() {
+		return idx;
+	}
+	int peek() {
+		if(size()==0) {
+			System.out.println("Heap is Empty!");
+			return -1;
+		}
+		return arr[0];
+	}
+
+	int remove() {
+		if(size()==0) {
+			System.out.println("Heap is Empty!");
+			return -1;
+		}
+
+		int max=arr[0];
+		arr[0]=arr[idx-1];
+		idx--;
+		//heapfiy Down
+		int root=0;
+		while(root< size()) {
+			// cheaking for existance of left child and right chlid
+			int leftVal=(2*root+1<size())? arr[2*root+1]:Integer.MIN_VALUE;
+			int rightVal=(2*root+2<size())? arr[2*root+2]:Integer.MIN_VALUE;
+			if(arr[root]>leftVal&&arr[root]>rightVal) break;
+			else {
+				if(rightVal>rightVal) {
+					//swap with righ child
+					int temp=arr[root];
+					arr[root]=arr[2*root+2];
+					arr[2*root+2]=temp;
+					root=2*root+2;
+				}
+				else {
+					//swap with left  child
+					int temp=arr[root];
+					arr[root]=arr[2*root+1];
+					arr[2*root+1]=temp;
+					root=2*root+1;
+				}
+			}
+		}
+		return max;
+	}
+	HeapMax(int capacity) {
+		arr=new int[capacity];
+		//Arrays.fill(arr,Integer.MIN_VALUE);
+	}
+}
+public class Main
+{
+	// creation of min heap by t.c(n)
+	static void buildMinHeap2(int[] arr) {
+		int n =arr.length;
+		int parent=(n/2)-1;
+		for (int i=parent; i>=0; i--) {
+			heapifyDown2(arr,i);
+		}
+	}
+	static void heapifyDown2(int[] arr, int parent) {
+		int size=arr.length;
+		while(parent<size) {
+			int leftVal= (parent*2+1<size)? arr[parent*2+1]:Integer.MAX_VALUE;
+			int rightVal= (parent*2+2<size)? arr[parent*2+2]:Integer.MAX_VALUE;
+			if(arr[parent]<leftVal&&arr[parent]<rightVal) break;
+			else {
+				if(leftVal<rightVal) {
+					int temp =arr[parent];
+					arr[parent]=arr[parent*2+1];
+					arr[parent*2+1]=temp;
+					parent=parent*2+1;
+				}
+				else {
+					int temp =arr[parent];
+					arr[parent]=arr[parent*2+2];
+					arr[parent*2+2]=temp;
+					parent=parent*2+2;
+				}
+			}
+		}
+	}
+
+	// Min Heap by Using heapifyUp with t.c(n log n)
+	static void buildMinHeap1(int[] arr) {
+		for (int i=0; i<arr.length; i++) {
+			heapifyUp1(arr,i);
+		}
+	}
+	static void	heapifyUp1(int[] arr,int root) {
+		while(root!=0) {
+			int parent=(root-1)/2;
+			if(arr[root]<arr[parent]) {
+				int temp=arr[root];
+				arr[root]=arr[parent];
+				arr[parent]=temp;
+				root=parent;
+			}
+			else {
+				break;
+			}
+		}
+	}
+	static void buildMaxHeap1(int[] arr, int parent, int size) {
+		while(parent<size) {
+			int leftVal=(parent*2+1<size)? arr[parent*2+1]:Integer.MIN_VALUE;
+			int rightVal=(parent*2+2<size)? arr[parent*2+2]:Integer.MIN_VALUE;
+			if(leftVal<arr[parent]&&rightVal<arr[parent]) break;
+			else {
+				if(leftVal>rightVal) {
+					int temp =arr[parent];
+					arr[parent]=arr[parent*2+1];
+					arr[parent*2+1]=temp;
+					parent=parent*2+1;
+				}
+				else {
+					int temp =arr[parent];
+					arr[parent]=arr[parent*2+2];
+					arr[parent*2+2]=temp;
+					parent=parent*2+2;
+				}
+			}
+		}
+  }
+	static void HeapSort(int[] arr) {
+		int size=arr.length;
+		for(int i =(size/2-1); i>=0; i--) {
+			buildMaxHeap1(arr,i,size);
+		}
+		for(int i=size-1; i>0; i--) {
+			int temp = arr[0];
+			arr[0]=arr[i];
+			arr[i]=temp;
+			buildMaxHeap1(arr,0,i);
+		}
+	}
+	public static void main(String[] args) {
+		int[] arr ={4,3,2,1};
+		HeapSort(arr);
+		for(int ele:arr){
+		    System.out.print(ele+" ");
+		    
+		}
+
+	}
+}
